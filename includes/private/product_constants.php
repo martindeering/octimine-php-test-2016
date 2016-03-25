@@ -33,7 +33,7 @@ DEFINE ('DEF_SALT', 'salt_hash_here');
 
 // constants for include paths, needs to be validated for each server
 // trailing slash added to keep the convention of just naming the folder/file.php when including
-DEFINE ('ROOT', $_SERVER['DOCUMENT_ROOT']);
+DEFINE ('ROOT', $_SERVER['DOCUMENT_ROOT'].'/octimine-php-test-2016');
 
 
 // constants for tracing (writes lots of info to the php error_log file)
