@@ -44,3 +44,19 @@ function writeTraceLog($trace_log)
 		error_log($trace_log);
 	}
 }
+
+
+
+/*
+ *	called by PDO error
+ *	output: print the trace_log string to the php_error console
+ *	TURN OFF when in production
+ */
+
+function handle_sql_errors($query, $error_message)
+{
+    if ( SQL_ERRORS == "off" ) { die; }
+    echo "<pre>".$query."</pre>";
+    echo $error_message;
+    die;
+}
