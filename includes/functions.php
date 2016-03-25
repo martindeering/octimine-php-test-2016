@@ -55,8 +55,19 @@ function writeTraceLog($trace_log)
 
 function handle_sql_errors($query, $error_message)
 {
-    if ( SQL_ERRORS == "off" ) { die; }
-    echo "<pre>".$query."</pre>";
-    echo $error_message;
-    die;
+    if ( SQL_ERRORS == "on" )
+    {
+		echo '
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h3 class="panel-title">Database Error!</h3>
+			</div>
+			<div class="panel-body">The server ran into an error. Sorry!<br />
+			'.$query.'<br /></div>
+		</div>
+		';
+		return;
+	} else {
+		die;
+	}
 }

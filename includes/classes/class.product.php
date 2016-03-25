@@ -67,7 +67,7 @@ class Product
 		writeTraceLog("returnCountofAllProducts() starts here ------->");
 
 	// ASSIGN the table name
-		$table = "products_table";
+		$table = "`_products_table`";
 
 	// Initiate Database connection
 		$connection = Database::getConnection();
@@ -76,20 +76,23 @@ class Product
 		$query = "
 		SELECT COUNT(*) 
 		FROM ".$table;
-		$statement = $connection->prepare($query);
-		$result = $statement->execute();
-		$data = $statement->fetch(PDO::FETCH_ASSOC);
-		if (!$result)
+		try
 		{
-			writeTraceLog("returnCountofAllProducts(): This statement returned false: ".$query);
-			$warning = "Sorry, but there was a database problem. Please try again.";
-			session::addSessionGeneralWarning($warning);
-			return;
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("returnCountOfAllFoodProducts(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
 		}
+
+		$data = $statement->fetch(PDO::FETCH_ASSOC);
 		$count = $data['COUNT(*)'];
 
 	// Return to controller
 		return $count;
+
 	exit;
 	}
 
@@ -101,16 +104,38 @@ class Product
 	public static function returnCountOfAllFoodProducts()
 	{
 	// add trace
-		
+		writeTraceLog("returnCountOfAllFoodProducts() starts here ------->");
+
+	// ASSIGN the table name, product_type
+		$table = "`products_table`";
+		$product_type = "food";
 
 	// Initiate Database connection
+		$connection = Database::getConnection();
+		$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// SELECT product data
+		$query = "
+		SELECT COUNT(*) 
+		FROM ".$table."
+		WHERE `product_type` = :product_type
+		";
 
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("returnCountOfAllFoodProducts(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
 
-	// COUNT product data
-
+		$data = $statement->fetch(PDO::FETCH_ASSOC);
+		$count = $data['COUNT(*)'];
 
 	// Return to controller
-
+		return $count;
 
 	exit;
 	}
@@ -123,16 +148,37 @@ class Product
 	public static function returnCountOfAllClothingProducts()
 	{
 	// add trace
-		
+		writeTraceLog("returnCountOfAllClothingProducts() starts here ------->");
+
+	// ASSIGN the table name, product_type
+		$table = "`products_table`";
+		$product_type = "clothing";
 
 	// Initiate Database connection
+		$connection = Database::getConnection();
 
+	// SELECT product data
+		$query = "
+		SELECT COUNT(*) 
+		FROM ".$table."
+		WHERE `product_type` = :product_type
+		";
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("returnCountOfAllFoodProducts(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
 
-	// COUNT product data
-
+		$data = $statement->fetch(PDO::FETCH_ASSOC);
+		$count = $data['COUNT(*)'];
 
 	// Return to controller
-
+		return $count;
 
 	exit;
 	}
