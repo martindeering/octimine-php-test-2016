@@ -16,7 +16,6 @@ $product = new Product;
 $countOfAllProducts = $product->returnCountOfAllProducts();
 $countOfAllFoodProducts = $product->returnCountofAllFoodProducts();
 $countOfAllClothingProducts = $product->returnCountofAllClothingProducts();
-
 $listOfAllFoodProducts = $product->returnListOfAllFoodProducts();
 $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 
@@ -52,7 +51,7 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 			</div>
 			<label for="inputProductPrice" class="control-label sr-only">Price</label>
 			<div class="col-xs-2">
-				<input type="text" class="form-control" name="product_price" placeholder="Price" autocomplete="off">
+				<input type="text" class="form-control" name="product_price" placeholder="Price, e.g. 2.99" autocomplete="off">
 			</div>
 			<input type='hidden' name='product_type' value='food' />
 			<button class="btn btn-success col-sm-offset-2" type='submit' name='action' value='addNewProduct'>Add New Item</button>
@@ -86,7 +85,7 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 			</div>
 			<label for="inputProductPrice" class="control-label sr-only">Price</label>
 			<div class="col-xs-2">
-				<input type="text" class="form-control" name="product_price" placeholder="Price" autocomplete="off">
+				<input type="text" class="form-control" name="product_price" placeholder="Price, e.g. 2.99" autocomplete="off">
 			</div>
 			<input type='hidden' name='product_type' value='clothing' />
 			<button class="btn btn-success col-sm-offset-2" type='submit' name='action' value='addNewProduct'>Add New Item</button>
