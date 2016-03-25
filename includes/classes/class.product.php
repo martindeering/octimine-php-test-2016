@@ -64,17 +64,32 @@ class Product
 	public static function returnCountOfAllProducts()
 	{
 	// add trace
-		
+		writeTraceLog("returnCountofAllProducts() starts here ------->");
+
+	// ASSIGN the table name
+		$table = "products_table";
 
 	// Initiate Database connection
-
+		$connection = Database::getConnection();
 
 	// SELECT product data
-
+		$query = "
+		SELECT COUNT(*) 
+		FROM ".$table;
+		$statement = $connection->prepare($query);
+		$result = $statement->execute();
+		$data = $statement->fetch(PDO::FETCH_ASSOC);
+		if (!$result)
+		{
+			writeTraceLog("returnCountofAllProducts(): This statement returned false: ".$query);
+			$warning = "Sorry, but there was a database problem. Please try again.";
+			session::addSessionGeneralWarning($warning);
+			return;
+		}
+		$count = $data['COUNT(*)'];
 
 	// Return to controller
-
-
+		return $count;
 	exit;
 	}
 
