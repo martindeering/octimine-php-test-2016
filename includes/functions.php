@@ -71,3 +71,47 @@ function handle_sql_errors($query, $error_message)
 		die;
 	}
 }
+
+
+
+/*
+ *	called by add and update product functions
+ *	input: string
+ *	output: true or false
+ */
+function validateProductName($product_name)
+{
+    if ( (strlen($product_name)) < 3 || (is_numeric($product_name)) )
+    {
+    	return false;
+    	exit;
+	} else {
+		return true;
+	}
+}
+
+
+
+/*
+ *	called by add and update product functions
+ *	input: string
+ *	output: true or false
+ */
+function validateProductPrice($product_price)
+{
+	// is there a '.' in the string?
+	if (strpos($product_price, '.') == false) 
+	{ 
+		writeTraceLog("no dot");
+		return false;
+		exit;
+	}
+	// are there characters before and after the '.'
+	$priceArray = explode(".",$product_price);
+	if ( (strlen($priceArray['0']) < 1) || (strlen($priceArray['1']) > 2) )
+	{
+		writeTraceLog("wrong");
+    	return false;
+	}
+	return true;
+}

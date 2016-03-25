@@ -72,7 +72,6 @@ class Product
 		WHERE `product_id` = :product_id
 		";
 
-// add the error handling here
 		try
 		{
 			$statement = $connection->prepare($query);
@@ -416,6 +415,43 @@ class Product
 		$product_name = trim(strip_tags(filter_var($_POST['product_name'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 		$product_price = trim(strip_tags(filter_var($_POST['product_price'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 
+	// VALIDATE all required variables
+		$result = validateProductName($product_name);
+		if (!$result) 
+		{
+			echo "
+				<div class='col-xs-6 col-sm-offset-3'>
+					<div class='panel panel-danger'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'>Vaidation Error!</h3>
+						</div>
+						<div class='panel-body'>The product name is numeric or too short! (".$product_name.").
+						<br />Name should be at least 3 characters long, and contain letters.</div>
+					</div>
+				</div>
+			";
+			return;
+			exit;
+		}
+
+		$result = validateProductPrice($product_price);
+		if (!$result) 
+		{
+			echo "
+				<div class='col-xs-6 col-sm-offset-3'>
+					<div class='panel panel-danger'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'>Vaidation Error!</h3>
+						</div>
+						<div class='panel-body'>The product price is formatted wrong! (".$product_price."). 
+						<br />Price should include figures before and after the decimal point, and only two figures after the decimal place, e.g. 0.99.</div>
+					</div>
+				</div>
+			";
+			return;
+			exit;
+		}
+		
 	// Initiate Database connection
 		$connection = Database::getConnection();
 
@@ -460,8 +496,6 @@ class Product
 		$product_id = $_POST['product_id'];
 		$product_type = $_POST['product_type'];
 		
-//		echo "id = ".$product_id." and type = ".$product_type;
-
 	// Initiate Database connection
 		$connection = Database::getConnection();
 
@@ -525,8 +559,42 @@ class Product
 		$product_name = trim(strip_tags(filter_var($_POST['product_name'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 		$product_price = trim(strip_tags(filter_var($_POST['product_price'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 
-// VALIDATE all required variables
+	// VALIDATE all required variables
+		$result = validateProductName($product_name);
+		if (!$result) 
+		{
+			echo "
+				<div class='col-xs-6 col-sm-offset-3'>
+					<div class='panel panel-danger'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'>Vaidation Error!</h3>
+						</div>
+						<div class='panel-body'>The product name is numeric or too short! (".$product_name.").
+						<br />Name should be at least 3 characters long, and contain letters.</div>
+					</div>
+				</div>
+			";
+			return;
+			exit;
+		}
 
+		$result = validateProductPrice($product_price);
+		if (!$result) 
+		{
+			echo "
+				<div class='col-xs-6 col-sm-offset-3'>
+					<div class='panel panel-danger'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'>Vaidation Error!</h3>
+						</div>
+						<div class='panel-body'>The product price is formatted wrong! (".$product_price."). 
+						<br />Price should include figures before and after the decimal point, and only two figures after the decimal place, e.g. 0.99.</div>
+					</div>
+				</div>
+			";
+			return;
+			exit;
+		}
 		
 	// Initiate Database connection
 		$connection = Database::getConnection();
