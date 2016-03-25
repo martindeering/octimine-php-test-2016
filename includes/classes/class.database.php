@@ -1,9 +1,8 @@
 <?php
 
 /**
- * class.database.php
- * Version 1.0
- * 
+ *	class.database.php
+ *	Version 1.0
  */
 
 

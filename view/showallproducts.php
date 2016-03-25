@@ -11,9 +11,9 @@
 writeTraceLog("showallproducts.php starts here ------->");
 
 
-instantiate product class
+// instantiate product class
 $product = new Product;
-$countOfAllProducts = $product->returnCountofAllProducts();
+$countOfAllProducts = $product->returnCountOfAllProducts();
 //$countOfAllFoodProducts = $product->returnCountofAllFoodProducts();
 //$countOfAllClothingProducts = $product->returnCountofAllClothingProducts();
 //$listOfAllFoodProducts = $product->listOfAllFoodProducts();

@@ -102,7 +102,7 @@ switch ($action)
 		</div>
 		<!-- end view div -->
 
-		<?php // require_once('view/footer.php'); ?>
+		<?php require_once('view/footer.php'); ?>
 	</div>
 	<!-- end container div -->
 
