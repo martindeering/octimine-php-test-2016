@@ -22,31 +22,51 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 
 ?>
 <!-- Begin the HTML body code -->
-	<h3>Count of All Products <span class="badge"><?php echo $countOfAllProducts; ?></span></h3>
+	<h3>Inventory of Products <span class="label label-success"><?php echo $countOfAllProducts; ?> Items</span></h3>
+	<br /><br />
 
 	<!-- Listing Food Products in Table -->
-	<h4>List of All Food Products <span class="badge"><?php echo $countOfAllFoodProducts; ?></span></h4>
+	<h4>List of All Food Products <span class="label label-info"><?php echo $countOfAllFoodProducts; ?> Items</span></h4>
 	
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>Product ID</th>
+				<th class="col-xs-2">Product ID</th>
 				<th>Product Name</th>
 				<th>Product Price</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php echo $listOfAllFoodProducts; ?>
+			<tr>
+			</tr>
 		</tbody>
 	</table>
 
+	<form action='index.php' method='post' name='addNewProduct' class='form-horizontal'>
+		<div class="form-group">
+			<label for="product_name" class="control-label sr-only">Name</label>
+			<div class="col-xs-4 col-sm-offset-2">
+				<input type="text" class="form-control" name="product_name" placeholder="Name">
+			</div>
+			<label for="inputProductPrice" class="control-label sr-only">Price</label>
+			<div class="col-xs-2 col-sm-offset-1">
+				<input type="text" class="form-control" name="product_price" placeholder="Price">
+			</div>
+			<input type='hidden' name='product_type' value='food' />
+			<button class="btn btn-primary col-sm-offset-1" type='submit' name='action' value='addNewProduct'>Add New Item</button>
+		</div>
+	</form>
+	<br /><br />
+
 	<!-- Listing Food Products in Table -->
-	<h4>List of All Clothing Products <span class="badge"><?php echo $countOfAllClothingProducts; ?></span></h4>
+	<hr /><br /><br />
+	<h4>List of All Clothing Products <span class="label label-info"><?php echo $countOfAllClothingProducts; ?> Items</span></h4>
 	
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>Product ID</th>
+				<th class="col-xs-2">Product ID</th>
 				<th>Product Name</th>
 				<th>Product Price</th>
 			</tr>
@@ -56,3 +76,17 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 		</tbody>
 	</table>
 
+	<form action='index.php' method='post' name='addNewProduct' class='form-horizontal'>
+		<div class="form-group">
+			<label for="product_name" class="control-label sr-only">Name</label>
+			<div class="col-xs-4 col-sm-offset-2">
+				<input type="text" class="form-control" name="product_name" placeholder="Name">
+			</div>
+			<label for="inputProductPrice" class="control-label sr-only">Price</label>
+			<div class="col-xs-2 col-sm-offset-1">
+				<input type="text" class="form-control" name="product_price" placeholder="Price">
+			</div>
+			<input type='hidden' name='product_type' value='clothing' />
+			<button class="btn btn-primary col-sm-offset-1" type='submit' name='action' value='addNewProduct'>Add New Item</button>
+		</div>
+	</form>
