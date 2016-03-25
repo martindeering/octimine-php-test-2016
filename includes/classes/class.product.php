@@ -255,10 +255,12 @@ class Product
 		}
 
 		$data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	// OUTPUT the data in table form
+		// Includes Edit and Remove buttons
 		$output = "";
 		foreach($data as $key)
 		{
-			//echo "this is the key ".$key['product_id'];
 			$thisProduct = new Product;
 			$thisProduct->getProductByID($key['product_id']);
 			
@@ -268,6 +270,20 @@ class Product
 					<td>".$thisProduct->product_id."</td>
 					<td>".$thisProduct->product_name."</td>
 					<td>".$thisProduct->product_price."</td>
+					<td>					
+						<div class='btn-toolbar pull-right'>
+							<div class='btn-group'>
+								<button type='button' class='btn btn-primary'>Edit</button>
+							</div>
+							<div class='btn-group'>
+								<form action='index.php' method='post' name='removeProduct'>
+									<input type='hidden' name='product_id' value='".$thisProduct->product_id."'>
+									<input type='hidden' name='product_type' value='".$thisProduct->product_type."'>
+									<button type='submit' name='action' class='btn btn-danger' value='removeProduct'>Remove</button>
+								</form>
+							</div>
+						</div>
+					</td>
 				</tr>
 			";
 		}
@@ -321,13 +337,28 @@ class Product
 			$thisProduct = new Product;
 			$thisProduct->getProductByID($key['product_id']);
 			
-			$output .= "
+			$output .= 
+			"
 				<tr>
 					<td>".$thisProduct->product_id."</td>
 					<td>".$thisProduct->product_name."</td>
 					<td>".$thisProduct->product_price."</td>
+					<td>					
+						<div class='btn-toolbar pull-right'>
+							<div class='btn-group'>
+								<button type='button' class='btn btn-primary'>Edit</button>
+							</div>
+							<div class='btn-group'>
+								<form action='index.php' method='post' name='removeProduct'>
+									<input type='hidden' name='product_id' value='".$thisProduct->product_id."'>
+									<input type='hidden' name='product_type' value='".$thisProduct->product_type."'>
+									<button type='submit' name='action' class='btn btn-danger' value='removeProduct'>Remove</button>
+								</form>
+							</div>
+						</div>
+					</td>
 				</tr>
-				";
+			";
 		}
 
 	// Return to controller
@@ -406,28 +437,41 @@ class Product
 	/**
 	 *	remove a product from the database
 	 */
-	public static function removeProduct($product_type, $product_name)
+	public static function removeProduct()
 	{
 	// add trace
-		
+		writeTraceLog("removeProduct() starts here ------->");
+
+	// ASSIGN the table name
+		$table = "`products_table`";
 
 	// VERIFY all required variables have content
-
+		$product_id = $_POST['product_id'];
+		$product_type = $_POST['product_type'];
 		
-	// ASSIGN the $_POST variables to named variables
+		echo "id = ".$product_id." and type = ".$product_type;
 
-
-	// VALIDATE all required variables
-
-		
 	// Initiate Database connection
-
+		$connection = Database::getConnection();
 
 	// DELETE product data
-
-
+		$query = "
+		DELETE FROM ".$table."
+		WHERE `product_id` = :product_id
+		";
+		
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_id', $product_id, PDO::PARAM_STR, 11);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("removeProduct(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
 	// Return to controller
-
+		return;
 
 	exit;
 	}

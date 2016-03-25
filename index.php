@@ -67,11 +67,9 @@ switch ($action)
 
 // Product actions set
 	case 'addNewProduct':
-		//echo "add new product";
 		$thisProduct = new Product;
 		$result == PRODUCT::addNewProduct();
-		//echo $_SESSION['message'];
-		echo "				<div class='modal'>
+		echo "	<div class='modal'>
 					<div class='modal-dialog'>
 						<div class='modal-content'>
 							<div class='modal-header'>
@@ -86,13 +84,13 @@ switch ($action)
 							</div>
 						</div>
 					</div>
-				</div>"
-;
+				</div>";
 	break;
 
 
 	case 'removeProduct':
-		$_SESSION['CONTENT'] = 'removeproduct';
+		$thisProduct = new Product;
+		$result == PRODUCT::removeProduct();
 	break;
 
 
