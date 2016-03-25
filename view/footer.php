@@ -3,7 +3,7 @@
 /**
  *	footer.php
  *
- *	the footer page, contains js
+ *	the footer page, contains js calls
  *	version 1.0
  */
 
@@ -12,6 +12,10 @@ writeTraceLog("footer.php starts here ------->");
 
 ?>
 <!-- Begin the HTML footer code -->
+		</div><!-- end div.col-sm-12 -->
+		</div><!-- end div.row -->
+		</div><!-- end div.container -->
+	</div><!-- end div.container -->
 	<!-- footer file starts  -->
 		<div id='footer'>
 			<!-- Bootstrap core JavaScript
