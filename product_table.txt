@@ -1,0 +1,12 @@
+Fields
+`product_id` is an 11 character integer
+-- allows lots of entries, auto-increments
+
+`product_type` varchar(12) NOT NULL COMMENT 'food or clothing'
+-- can be expaned to other categories, at the moment only needs 12 characters
+
+`product_name` varchar(30) NOT NULL,
+-- allows product names up to 30 characters
+
+`product_price` varchar(11) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL COMMENT 'price, inc. decimal'
+-- price saved as a string as mysql is poor at handling decimal figures.
