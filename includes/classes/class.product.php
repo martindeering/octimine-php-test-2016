@@ -129,7 +129,7 @@ class Product
 	// Return to controller
 		return $count;
 
-	exit;
+		exit;
 	}
 
 
@@ -173,7 +173,7 @@ class Product
 	// Return to controller
 		return $count;
 
-	exit;
+		exit;
 	}
 
 
@@ -216,7 +216,7 @@ class Product
 	// Return to controller
 		return $count;
 
-	exit;
+		exit;
 	}
 
 
@@ -273,7 +273,11 @@ class Product
 					<td>					
 						<div class='btn-toolbar pull-right'>
 							<div class='btn-group'>
-								<button type='button' class='btn btn-primary'>Edit</button>
+								<form action='index.php' method='post' name='editProduct'>
+									<input type='hidden' name='product_id' value='".$thisProduct->product_id."'>
+									<input type='hidden' name='product_type' value='".$thisProduct->product_type."'>
+									<button type='submit' name='action' class='btn btn-primary' value='editProduct'>Edit</button>
+								</form>
 							</div>
 							<div class='btn-group'>
 								<form action='index.php' method='post' name='removeProduct'>
@@ -291,7 +295,7 @@ class Product
 	// Return to controller
 		return $output;
 
-	exit;
+		exit;
 	}
 
 
@@ -330,10 +334,12 @@ class Product
 		}
 
 		$data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	// OUTPUT the data in table form
+		// Includes Edit and Remove buttons
 		$output = "";
 		foreach($data as $key)
 		{
-			//echo "this is the key ".$key['product_id'];
 			$thisProduct = new Product;
 			$thisProduct->getProductByID($key['product_id']);
 			
@@ -346,7 +352,11 @@ class Product
 					<td>					
 						<div class='btn-toolbar pull-right'>
 							<div class='btn-group'>
-								<button type='button' class='btn btn-primary'>Edit</button>
+								<form action='index.php' method='post' name='editProduct'>
+									<input type='hidden' name='product_id' value='".$thisProduct->product_id."'>
+									<input type='hidden' name='product_type' value='".$thisProduct->product_type."'>
+									<button type='submit' name='action' class='btn btn-primary' value='editProduct'>Edit</button>
+								</form>
 							</div>
 							<div class='btn-group'>
 								<form action='index.php' method='post' name='removeProduct'>
@@ -364,7 +374,7 @@ class Product
 	// Return to controller
 		return $output;
 
-	exit;
+		exit;
 	}
 
 
@@ -420,7 +430,7 @@ class Product
 			$statement = $connection->prepare($query);
 			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
 			$statement->bindParam(':product_name', $product_name, PDO::PARAM_STR, 30);
-			$statement->bindParam(':product_price', $product_price, PDO::PARAM_STR, 10);
+			$statement->bindParam(':product_price', $product_price, PDO::PARAM_STR, 11);
 			$result = $statement->execute();
 		} catch(PDOException $e) {
 			writeTraceLog("addNewProduct(): This statement returned false: ".$query);
@@ -449,7 +459,7 @@ class Product
 		$product_id = $_POST['product_id'];
 		$product_type = $_POST['product_type'];
 		
-		echo "id = ".$product_id." and type = ".$product_type;
+//		echo "id = ".$product_id." and type = ".$product_type;
 
 	// Initiate Database connection
 		$connection = Database::getConnection();
@@ -473,7 +483,7 @@ class Product
 	// Return to controller
 		return;
 
-	exit;
+		exit;
 	}
 
 
@@ -481,34 +491,70 @@ class Product
 	/**
 	 *	edit a product in the database
 	 */
-	public static function editProduct($product_type, $product_name)
+	public static function updateProduct()
 	{
-		//$product_id = $connection->lastInsertId();
 	// add trace
-		
+		writeTraceLog("addNewProduct() starts here ------->");
 
+	// ASSIGN the table name
+		$table = "`products_table`";
 	// VERIFY all required variables have content
+		if (
+			empty($_POST['product_id']) || 
+			empty($_POST['product_name']) ||
+			empty($_POST['product_price'])
+			) 
+		{
+// TURN THIS INTO A MODAL DIALOGUE
+			echo "
+				<div class='panel panel-danger col-sm-6 col-sm-offset-3'>
+					<div class='panel-heading'>
+						<h3 class='panel-title'>Incomplete Form!</h3>
+					</div>
+					<div class='panel-body'>One or more fields were left blank!</div>
+				</div>
+			";
+			return;
+			exit;
+		}
 
-		
-	// ASSIGN the $_POST variables to named variables
+	// ASSIGN the post variables to named variables
+		$product_id = $_POST['product_id'];
+		$product_name = trim(strip_tags(filter_var($_POST['product_name'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+		$product_price = trim(strip_tags(filter_var($_POST['product_price'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 
-
-	// VALIDATE all required variables
+// VALIDATE all required variables
 
 		
 	// Initiate Database connection
+		$connection = Database::getConnection();
 
-
-	// UPDATE product data
-
-
+	// SELECT product data
+		$query = "
+		UPDATE `products_table`
+		SET `product_price` = :product_price, `product_name` = :product_name
+		WHERE `product_id` = $product_id
+		";
+		try
+		{
+			$statement = $connection->prepare($query);
+			// CANNOT figure out why this bindparam isn't working...
+			//$statement->bindParam(':product_id', $product_id, PDO::PARAM_STR, 11);
+			$statement->bindParam(':product_name', $product_name, PDO::PARAM_STR, 30);
+			$statement->bindParam(':product_price', $product_price, PDO::PARAM_STR, 11);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			handle_sql_errors($query, $e->getMessage());
+			writeTraceLog("addNewProduct(): This statement returned false: ".$query);
+			// function in functions.php
+			
+		}
+		
 	// Return to controller
+		return;
 
-
-	exit;
+		exit;
 	}
-
-
 
 }
 ?>

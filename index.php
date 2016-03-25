@@ -16,10 +16,10 @@
 // Actions Required:
 	// add new product
 	// remove product
-	// edit product
+	// update product
 	// list all products
-	// ?count food products
-	// ?count clothing products
+	// count food products
+	// count clothing products
 
 
 // QUESTIONS
@@ -68,7 +68,7 @@ switch ($action)
 // Product actions set
 	case 'addNewProduct':
 		$thisProduct = new Product;
-		$result == PRODUCT::addNewProduct();
+		$result = PRODUCT::addNewProduct();
 		echo "	<div class='modal'>
 					<div class='modal-dialog'>
 						<div class='modal-content'>
@@ -90,7 +90,7 @@ switch ($action)
 
 	case 'removeProduct':
 		$thisProduct = new Product;
-		$result == PRODUCT::removeProduct();
+		$result = PRODUCT::removeProduct();
 	break;
 
 
@@ -99,10 +99,10 @@ switch ($action)
 	break;
 
 
-// SEARCH set
-	case 'search':
-		// $_SESSION['SEARCH_OMNI'] = $_GET['searchterm'];
-		// $_SESSION['CONTENT'] = 'search';
+	case 'updateProduct':
+		$thisProduct = new Product;
+		$result = PRODUCT::updateProduct();
+		$_SESSION['CONTENT'] = 'showallproducts';
 	break;
 }
 
