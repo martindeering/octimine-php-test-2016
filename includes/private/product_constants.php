@@ -14,7 +14,7 @@ error_log("product_constants.php starts here ------->");
 
 
 // ABSTRACT
-// Constants that are used in the gfs web app.
+// Constants that are used in the scripts.
 // e.g. The username and password for the DB.
 // the salt constant that makes part of the fingerprint to secure sessions
 
