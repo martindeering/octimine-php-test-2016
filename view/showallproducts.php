@@ -32,8 +32,9 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 		<thead>
 			<tr>
 				<th class="col-xs-2">Product ID</th>
-				<th>Product Name</th>
-				<th>Product Price</th>
+				<th class="col-xs-4">Product Name</th>
+				<th class="col-xs-2">Product Price</th>
+				<th class="col-xs-4">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,14 +48,14 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 		<div class="form-group">
 			<label for="product_name" class="control-label sr-only">Name</label>
 			<div class="col-xs-4 col-sm-offset-2">
-				<input type="text" class="form-control" name="product_name" placeholder="Name">
+				<input type="text" class="form-control" name="product_name" placeholder="Name" autocomplete="off">
 			</div>
 			<label for="inputProductPrice" class="control-label sr-only">Price</label>
-			<div class="col-xs-2 col-sm-offset-1">
-				<input type="text" class="form-control" name="product_price" placeholder="Price">
+			<div class="col-xs-2">
+				<input type="text" class="form-control" name="product_price" placeholder="Price" autocomplete="off">
 			</div>
 			<input type='hidden' name='product_type' value='food' />
-			<button class="btn btn-primary col-sm-offset-1" type='submit' name='action' value='addNewProduct'>Add New Item</button>
+			<button class="btn btn-success col-sm-offset-2" type='submit' name='action' value='addNewProduct'>Add New Item</button>
 		</div>
 	</form>
 	<br /><br />
@@ -67,8 +68,9 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 		<thead>
 			<tr>
 				<th class="col-xs-2">Product ID</th>
-				<th>Product Name</th>
-				<th>Product Price</th>
+				<th class="col-xs-4">Product Name</th>
+				<th class="col-xs-2">Product Price</th>
+				<th class="col-xs-4">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -80,13 +82,13 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 		<div class="form-group">
 			<label for="product_name" class="control-label sr-only">Name</label>
 			<div class="col-xs-4 col-sm-offset-2">
-				<input type="text" class="form-control" name="product_name" placeholder="Name">
+				<input type="text" class="form-control" name="product_name" placeholder="Name" autocomplete="off">
 			</div>
 			<label for="inputProductPrice" class="control-label sr-only">Price</label>
-			<div class="col-xs-2 col-sm-offset-1">
-				<input type="text" class="form-control" name="product_price" placeholder="Price">
+			<div class="col-xs-2">
+				<input type="text" class="form-control" name="product_price" placeholder="Price" autocomplete="off">
 			</div>
 			<input type='hidden' name='product_type' value='clothing' />
-			<button class="btn btn-primary col-sm-offset-1" type='submit' name='action' value='addNewProduct'>Add New Item</button>
+			<button class="btn btn-success col-sm-offset-2" type='submit' name='action' value='addNewProduct'>Add New Item</button>
 		</div>
 	</form>
