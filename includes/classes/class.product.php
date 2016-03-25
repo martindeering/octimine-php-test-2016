@@ -59,6 +59,42 @@ class Product
 
 
 	/**
+	 *	return product data by ID
+	 */
+	public function getProductByID($product_id)
+	{
+		writeTraceLog("getProductByID() starts here ------->");
+	// Database
+		$connection = Database::getConnection();
+		$query = "
+		SELECT * 
+		FROM `products_table`
+		WHERE `product_id` = :product_id
+		";
+
+// add the error handling here
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_id', $product_id, PDO::PARAM_INT, 11);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("getProductByID(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
+
+		$data = $statement->fetch(PDO::FETCH_ASSOC);
+
+		$thisProduct = new Product;
+		self::setProductData($data['product_id'], $data['product_type'], $data['product_name'], $data['product_price']);
+
+		return;
+	}
+
+
+
+	/**
 	 *	return count of all products
 	 */
 	public static function returnCountOfAllProducts()
@@ -67,7 +103,7 @@ class Product
 		writeTraceLog("returnCountofAllProducts() starts here ------->");
 
 	// ASSIGN the table name
-		$table = "`_products_table`";
+		$table = "`products_table`";
 
 	// Initiate Database connection
 		$connection = Database::getConnection();
@@ -185,47 +221,116 @@ class Product
 
 
 
-//	list all products by type (food and clothing)
 	/**
 	 *	return list of all food products
 	 */
 	public static function returnListOfAllFoodProducts()
 	{
 	// add trace
-		
+		writeTraceLog("returnListOfAllFoodProducts() starts here ------->");
+
+	// ASSIGN the table name
+		$table = "`products_table`";
+		$product_type = "food";
 
 	// Initiate Database connection
-
+		$connection = Database::getConnection();
 
 	// SELECT product data
+		$query = "
+		SELECT `product_id` 
+		FROM ".$table."
+		WHERE `product_type` = :product_type
+		ORDER BY `product_id` ASC
+		";
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("returnListOfAllFoodProducts(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
 
+		$data = $statement->fetchAll(PDO::FETCH_ASSOC);
+		$output = "";
+		foreach($data as $key)
+		{
+			//echo "this is the key ".$key['product_id'];
+			$thisProduct = new Product;
+			$thisProduct->getProductByID($key['product_id']);
+			
+			$output .= "
+				<tr>
+					<td>".$thisProduct->product_id."</td>
+					<td>".$thisProduct->product_name."</td>
+					<td>".$thisProduct->product_price."</td>
+				</tr>
+				";
+		}
 
 	// Return to controller
-
+		return $output;
 
 	exit;
 	}
 
 
 
-
-//	list all products by type (food and clothing)
 	/**
 	 *	return list of all clothing products
 	 */
 	public static function returnListOfAllClothingProducts()
 	{
 	// add trace
-		
+		writeTraceLog("returnListOfAllClothingProducts() starts here ------->");
+
+	// ASSIGN the table name
+		$table = "`products_table`";
+		$product_type = "clothing";
 
 	// Initiate Database connection
-
+		$connection = Database::getConnection();
 
 	// SELECT product data
+		$query = "
+		SELECT `product_id` 
+		FROM ".$table."
+		WHERE `product_type` = :product_type
+		ORDER BY `product_id` ASC
+		";
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("returnListOfAllClothingProducts(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
 
+		$data = $statement->fetchAll(PDO::FETCH_ASSOC);
+		$output = "";
+		foreach($data as $key)
+		{
+			//echo "this is the key ".$key['product_id'];
+			$thisProduct = new Product;
+			$thisProduct->getProductByID($key['product_id']);
+			
+			$output .= "
+				<tr>
+					<td>".$thisProduct->product_id."</td>
+					<td>".$thisProduct->product_name."</td>
+					<td>".$thisProduct->product_price."</td>
+				</tr>
+				";
+		}
 
 	// Return to controller
-
+		return $output;
 
 	exit;
 	}
