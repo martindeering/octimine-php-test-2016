@@ -262,13 +262,14 @@ class Product
 			$thisProduct = new Product;
 			$thisProduct->getProductByID($key['product_id']);
 			
-			$output .= "
+			$output .= 
+			"
 				<tr>
 					<td>".$thisProduct->product_id."</td>
 					<td>".$thisProduct->product_name."</td>
 					<td>".$thisProduct->product_price."</td>
 				</tr>
-				";
+			";
 		}
 
 	// Return to controller
@@ -340,30 +341,64 @@ class Product
 	/**
 	 *	add a new product to the database
 	 */
-	public static function addNewProduct($product_type, $product_name, $product_price)
+	public static function addNewProduct()
 	{
 	// add trace
-		
+		writeTraceLog("addNewProduct() starts here ------->");
+
+	// ASSIGN the table name
+		$table = "`products_table`";
 
 	// VERIFY all required variables have content
+		if (
+			empty($_POST['product_type']) || 
+			empty($_POST['product_name']) ||
+			empty($_POST['product_price'])
+			) 
+		{
+// TURN THIS INTO A MODAL DIALOGUE
+			echo "
+				<div class='panel panel-danger col-sm-6 col-sm-offset-3'>
+					<div class='panel-heading'>
+						<h3 class='panel-title'>Incomplete Form!</h3>
+					</div>
+					<div class='panel-body'>One or more fields were left blank!</div>
+				</div>
+			";
+			return;
+			exit;
+		}
 
-		
-	// ASSIGN the $_POST variables to named variables
+	// ASSIGN the post variables to named variables
+		$product_type = trim(strip_tags(filter_var($_POST['product_type'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+		$product_name = trim(strip_tags(filter_var($_POST['product_name'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+		$product_price = trim(strip_tags(filter_var($_POST['product_price'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 
-
-	// VALIDATE all required variables
-
-		
 	// Initiate Database connection
+		$connection = Database::getConnection();
 
-
-	// INSERT product data
-
-
+	// SELECT product data
+		$query = "
+		INSERT INTO ".$table."
+		(`product_type`, `product_name`, `product_price`) 
+		VALUES
+		(:product_type, :product_name, :product_price);
+		";
+		try
+		{
+			$statement = $connection->prepare($query);
+			$statement->bindParam(':product_type', $product_type, PDO::PARAM_STR, 12);
+			$statement->bindParam(':product_name', $product_name, PDO::PARAM_STR, 30);
+			$statement->bindParam(':product_price', $product_price, PDO::PARAM_STR, 10);
+			$result = $statement->execute();
+		} catch(PDOException $e) {
+			writeTraceLog("addNewProduct(): This statement returned false: ".$query);
+			// function in functions.php
+			handle_sql_errors($query, $e->getMessage());
+		}
+		
 	// Return to controller
-
-
-	exit;
+		return true;
 	}
 
 
@@ -404,6 +439,7 @@ class Product
 	 */
 	public static function editProduct($product_type, $product_name)
 	{
+		//$product_id = $connection->lastInsertId();
 	// add trace
 		
 
