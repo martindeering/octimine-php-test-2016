@@ -39,6 +39,7 @@ DEFINE ('ROOT', $_SERVER['DOCUMENT_ROOT'].'/octimine-php-test-2016');
 // constants for tracing (writes lots of info to the php error_log file)
 DEFINE ('TRACE', 'on'); // lowercase 'on' or 'off'
 
+
 // constants for mysql error output (writes to the browser)
 DEFINE ('SQL_ERRORS', 'on');
 
