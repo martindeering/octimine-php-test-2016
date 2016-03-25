@@ -60,7 +60,7 @@ $listOfAllClothingProducts = $product->returnlistOfAllClothingProducts();
 	</form>
 	<br /><br />
 
-	<!-- Listing Food Products in Table -->
+	<!-- Listing Clothing Products in Table -->
 	<hr /><br /><br />
 	<h4>List of All Clothing Products <span class="label label-info"><?php echo $countOfAllClothingProducts; ?> Items</span></h4>
 	
