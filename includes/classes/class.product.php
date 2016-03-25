@@ -397,13 +397,14 @@ class Product
 			empty($_POST['product_price'])
 			) 
 		{
-// TURN THIS INTO A MODAL DIALOGUE
 			echo "
-				<div class='panel panel-danger col-sm-6 col-sm-offset-3'>
-					<div class='panel-heading'>
-						<h3 class='panel-title'>Incomplete Form!</h3>
+				<div class='col-xs-6 col-sm-offset-3'>
+					<div class='panel panel-danger'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'>Incomplete Form!</h3>
+						</div>
+						<div class='panel-body'>One or more fields were left blank!</div>
 					</div>
-					<div class='panel-body'>One or more fields were left blank!</div>
 				</div>
 			";
 			return;
@@ -494,7 +495,7 @@ class Product
 	public static function updateProduct()
 	{
 	// add trace
-		writeTraceLog("addNewProduct() starts here ------->");
+		writeTraceLog("updateProduct() starts here ------->");
 
 	// ASSIGN the table name
 		$table = "`products_table`";
@@ -505,13 +506,14 @@ class Product
 			empty($_POST['product_price'])
 			) 
 		{
-// TURN THIS INTO A MODAL DIALOGUE
 			echo "
-				<div class='panel panel-danger col-sm-6 col-sm-offset-3'>
-					<div class='panel-heading'>
-						<h3 class='panel-title'>Incomplete Form!</h3>
+				<div class='col-xs-6 offset col-sm-offset-3'>
+					<div class='panel panel-danger'>
+						<div class='panel-heading'>
+							<h3 class='panel-title'>Incomplete Form!</h3>
+						</div>
+						<div class='panel-body'>One or more fields were left blank!</div>
 					</div>
-					<div class='panel-body'>One or more fields were left blank!</div>
 				</div>
 			";
 			return;
@@ -545,7 +547,7 @@ class Product
 			$result = $statement->execute();
 		} catch(PDOException $e) {
 			handle_sql_errors($query, $e->getMessage());
-			writeTraceLog("addNewProduct(): This statement returned false: ".$query);
+			writeTraceLog("updateProduct(): This statement returned false: ".$query);
 			// function in functions.php
 			
 		}
