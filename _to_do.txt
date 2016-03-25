@@ -1,0 +1,16 @@
+docs
+
+// PDO error function should be turned off for production
+
+
+Could consolodate returnListOfAllClothingProducts() and returnListOfAllFoodProducts().
+
+
+X-Site Scripting:
+This app lacks a session class that makes unique fingerprints on each page load, which is then sent as a hidden <input>, and in the index.php file, would check the input sent fingerprint against the session fingerprint, and abort if those fingerprints don't match.
+(most of these functions are already in class.sessions.php).
+
+
+@HEREDOC:
+Could contain @HEREDOC formatting in php file headers.
+
